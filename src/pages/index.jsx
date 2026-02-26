@@ -11,39 +11,22 @@ export const Home = () => {
   
   const steps = [Ners, Email, Date, Success];
   const validators = [validateStepOne, validateStepTwo, validateStepThree];
-
-  // const handleNext = () => {
-  //   if (step >= steps.length - 1) return;
-
-  //   const validate = validators[step];
-  //   if (validate) {
-  //     const { errors, isValid } = validate(formValues);
-  //     if (!isValid) {
-  //       setFormErrors(errors);
-  //       return;
-  //     }
-  //   }
-  //   setFormErrors({});
-  //   setStep((prev) => prev + 1);
-  // };
-
+  
   const handleNext = () => {
   if (step >= steps.length - 1) return;
 
   const validate = validators[step];
   if (validate) {
-    // 1. formValues доторх утгуудыг консол дээр харж шалгах
     console.log("Одоогийн утгууд:", formValues); 
     
     const { errors, isValid } = validate(formValues);
     
     if (!isValid) {
-      setFormErrors(errors); // Алдаа байвал энд гацна
+      setFormErrors(errors);
       return;
     }
   }
 
-  // Хэрэв VALID бол алдааг цэвэрлээд дараагийн алхам руу шилжинэ
   setFormErrors({});
   setStep((prev) => prev + 1);
 };
@@ -68,7 +51,7 @@ useEffect(() => {
 
 const handleChange = (event) => {
   const { value, name } = event.target;
-  console.log(`Input нэр: ${name}, Бичсэн утга: ${value}`); // Үүнийг нэмээд консолоо хар
+  console.log(`Input нэр: ${name}, Бичсэн утга: ${value}`);
   setFormValues((prev) => ({ ...prev, [name]: value }));
   setFormErrors((prev) => ({ ...prev, [name]: "" }));
 };  

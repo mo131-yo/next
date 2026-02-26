@@ -1,91 +1,10 @@
-// import React, {useState, useRef} from 'react'
-// import { Header } from '../layer/Header';
-// import {index} from "@/pages/index.jsx";
-// import {initialValues} from "@/constant/initial";
-
-// export const Date = () => {
-//   const inputRef = useRef();
-//   const [isDragging, setIsDragging]= useState(false);
-//   const [formValues, setFormValues]=useState(initialValues);
-// const [imageUrl, setImageUrl] =useState("")
-
-// const handleBrowserClick= ()=>{
-//   if(inputRef.current){
-//     inputRef.current.click();
-//   }
-// }
-
-// const handleUploadImage =(file)=>{
-//   const imageUrl =URL.createObjectURL(file);
-//   setImageUrl(imageUrl) ;
-//   setFormValues((previous)=> ({... previous, profileImage: imageUrl}) );
-// }
-
-//   const handleChange = (event) => {
-//   const uploadedImage = Array.from(event.target.files).at(0);
-
-//     handleUploadImage(uploadedImage);
-// }
-//     const clearImage =()=>{
-//   inputRef.current.value= "";
-//   setImageUrl("");
-//   setFormValues((previous)=>({ ...previous, profileImage: ""}))
-//   }
-
-//     const handleDrop=(event)=>{
-//     event.preventDefault();
-//     const uploadedImage = Array.from(event.dataTransfer.files).at(0);
-//     handleUploadImage(uploadedImage);
-//     setIsDragging(false);
-//   }
-
-//     const handleDragOver =(event)=>{
-//     event.preventDefault();
-//     setIsDragging(true);
-//   }
-
-//   const handleDragLeave=()=> setIsDragging (false);
-//   return (
-//     <div>
-//          <Header />
-//          <div className='pt-5'>
-//           <div>
-//             <p className='font-2 text-txt text-medku'>Date of birth *</p>
-//             <input type="date" placeholder="--/--/--" name="calinder" value="" min="1999-01-01" max="2028-02-20"  className='w-104 h-11 p-3 border rounded-lg color-#0CA5E9' />
-//          </div>
-//              {/* {formErrors.dateOfBirth && (
-//               <p className="text-red text-3"
-//               >{formErrors.date}</p>)} */}
-//           <div>
-//             <p className='font-2 text-txt text-medku'>Profile image *</p>
-//             <div   
-//              onDrop={handleDrop} 
-//             onDragOver={handleDragOver}
-//             onClick={handleBrowserClick}
-//             onDragLeave={handleDragLeave} className='bg-red h-75 w-100 flex justify-center items-center'>
-//             {imageUrl ? <img src={imageUrl} alt="image" className='w-full '/> : "Browse file or drag and drop here"}
-//             </div>
-//             {imageUrl && 
-//             <button onClick={clearImage} className='w-8 h-8 bg-amber-700'>x</button>}
-//               <input type="file" hidden ref={inputRef} className='w-full h-50 p-3 bg-gray-400 rounded-lg color-#0CA5E9 border-isDragging ? "border-dashed border-red": border-solid border-2 border-gray-300' 
-//               onChange={handleChange} 
-//             />
-//           </div>
-//          </div>
-       
-//     </div>
-//   )
-// }
-
-
-
 import React, { useState, useRef } from 'react'
 import { Header } from '../layer/Header';
-import { Footer } from '../layer/Footer'; // Footer нэмэх
+import { Footer } from '../layer/Footer';
 
 export const Date = ({ 
-  handleChange, // Home-оос ирж буй функц
-  formValues,   // Home-оос ирж буй дата
+  handleChange,
+  formValues,
   formErrors, 
   handleNext, 
   handlePrev, 
@@ -100,14 +19,11 @@ export const Date = ({
     if (inputRef.current) inputRef.current.click();
   }
 
-  // Зургийг файл хэлбэрээр боловсруулах
   const handleUploadImage = (file) => {
     if (!file) return;
     const url = URL.createObjectURL(file);
     setImageUrl(url);
     
-    // Home-оос ирсэн handleChange-ийг дуурайж утгыг хадгалах
-    // profileImage-ийг "value" болгож дамжуулна
     const event = {
       target: {
         name: "profileImage",
@@ -123,7 +39,7 @@ export const Date = ({
   }
 
   const clearImage = (e) => {
-    e.stopPropagation(); // Click event-ийг дээш дамжуулахгүй (browse нээхээс сэргийлнэ)
+    e.stopPropagation();
     setImageUrl("");
     const event = { target: { name: "profileImage", value: "" } };
     handleChange(event);
@@ -140,12 +56,11 @@ export const Date = ({
     <div>
       <Header />
       <div className='pt-5'>
-        {/* Date input */}
         <div className="mb-4">
           <p className='font-bold text-sm mb-2'>Date of birth *</p>
           <input 
             type="date" 
-            name="date" // Validation-тайгаа ижил нэр өгөх
+            name="date"
             value={formValues.date} 
             onChange={handleChange}
             className={`w-full h-11 p-3 border rounded-lg ${formErrors.date ? 'border-red-500' : 'border-gray-300'}`} 
@@ -153,7 +68,6 @@ export const Date = ({
           {formErrors.date && <p className="text-red-500 text-xs mt-1">{formErrors.date}</p>}
         </div>
 
-        {/* Profile image upload */}
         <div className="mb-6">
           <p className='font-bold text-sm mb-2'>Profile image *</p>
           <div   
@@ -183,7 +97,6 @@ export const Date = ({
           {formErrors.profileImage && <p className="text-red-500 text-xs mt-1">{formErrors.profileImage}</p>}
         </div>
 
-        {/* Footer-ийг энд нэмнэ */}
         <Footer 
           handleNext={handleNext} 
           handlePrev={handlePrev} 

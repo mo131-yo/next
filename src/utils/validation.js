@@ -32,15 +32,12 @@ export const validateStepThree = (formValues = {}) => {
   if (!formValues.date) {
     errors.date = "Төрсөн өдөр сонгоно уу";
   } else {
-    // 18 насны шалгалт
     const birthDate = new Date(formValues.date);
     const today = new Date();
     
-    // Насыг тооцох
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
     
-    // Хэрэв төрсөн сар нь болоогүй эсвэл төрсөн өдөр нь болоогүй бол насыг -1 болгоно
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
@@ -50,7 +47,6 @@ export const validateStepThree = (formValues = {}) => {
     }
   }
 
-  // Зураг шалгах (заавал биш бол устгаж болно)
   if (!formValues.profileImage) {
     errors.profileImage = "Профайл зураг оруулна уу";
   }
